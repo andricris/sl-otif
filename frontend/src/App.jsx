@@ -77,7 +77,7 @@ export default function App() {
     <div className="min-h-full">
       <Masthead />
 
-      <main className="mx-auto max-w-6xl px-6 pb-24">
+      <main className="mx-auto max-w-7xl px-6 pb-24">
         <section aria-labelledby="upload-h" className="pt-10">
           <SectionLabel id="upload-h">01 Berkas</SectionLabel>
 
@@ -261,7 +261,7 @@ function ResultSheet({ r, index }) {
         </button>
       </header>
 
-      <div className="hidden max-w-full overflow-x-auto lg:block">
+      <div className="hidden max-w-full overflow-x-auto sm:block">
         <table className="w-full min-w-[760px] border-collapse text-[13px]">
           <thead>
             <tr className="border-b border-rule-2">
@@ -308,7 +308,7 @@ function ResultSheet({ r, index }) {
           </tbody>
         </table>
       </div>
-      <div className="divide-y divide-rule lg:hidden">
+      <div className="divide-y divide-rule sm:hidden">
         {months.map((m) => {
           const d = agg[m];
           const f = d.lateL + d.ontL;
