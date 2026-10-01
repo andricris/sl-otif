@@ -1,0 +1,45 @@
+# ---- Node / Vite ----
+node_modules/
+frontend/dist/
+.vite/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.python-version
+
+# ---- Env / secrets ----
+.env
+.env.local
+.env.*.local
+frontend/.env.local
+
+# ---- Vercel ----
+.vercel/
+
+# ---- Tooling lokal ----
+.kilo/
+
+# ---- Excel temp lock files (saat file dibuka) ----
+~$*.xlsx
+~$*.xls
+
+# ---- Output hasil generate ----
+hasil/
+hasil_web/
+_apiout/
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Data mentah / contoh (berisi data nyata; jangan ikut ke repo publik) ----
+*.xlsx
+*.xlsm
+*.xls
