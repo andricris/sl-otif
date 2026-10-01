@@ -25,6 +25,7 @@ frontend/.env.local
 
 # ---- Tooling lokal ----
 .kilo/
+_work/
 
 # ---- Excel temp lock files (saat file dibuka) ----
 ~$*.xlsx
