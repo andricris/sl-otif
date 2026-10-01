@@ -90,16 +90,21 @@
   dl.method dd{margin:0;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);word-break:break-word}
   .foot{margin-top:16px;max-width:44rem;font-size:12px;color:var(--muted)}
   footer.end{border-top:1px solid var(--rule);margin-top:64px;padding:24px 0 64px;font:400 11px/1.6 var(--mono);color:var(--muted)}
-  @media (max-width:900px){
-    .wrap{padding:0 16px}
-    table{min-width:620px;font-size:12px}
-    th,td{padding:8px 8px}
-    thead th{letter-spacing:.08em}
-    .sheet h3{font-size:24px}
-    .sheet .head{padding:14px 16px}
-    thead th:first-child,tbody th{padding-left:16px}
-    thead th:last-child,td.stat:last-child,tr.total td.stat:last-child{padding-right:16px}
-    .scrollhint{display:block;margin-left:16px;margin-right:16px}
+  @media (max-width:960px){
+    .wrap{padding:0 14px}
+    header.mast{padding:40px 0 26px}
+    header.mast h1{font-size:clamp(2.1rem,10vw,3rem)}
+    .scrollhint{display:none}
+    .tbl-scroll{overflow:visible;max-width:100%}
+    table,thead,tbody,tr,td,th{display:block;width:100%}
+    table{min-width:0;font-size:14px}
+    thead{display:none}
+    tbody tr{border-bottom:1px solid var(--rule);padding:8px 0}
+    tbody tr.total{border-top:2px solid var(--ink);background:rgba(223,227,217,.4);padding-bottom:12px}
+    tbody th{font-size:23px;padding:8px 16px 2px}
+    td{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:5px 16px;text-align:right;white-space:normal}
+    td::before{content:attr(data-label);flex:0 0 auto;font:500 10.5px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-align:left}
+    td.stat{justify-content:space-between}
   }
   @media (max-width:640px){ dl.method{grid-template-columns:1fr} }
 </style>
@@ -258,16 +263,24 @@ if (typeof ExcelJS === "undefined") {
     var body = months.map(function (m) {
       var d = agg[m], f = d.lateL + d.ontL, gg = d.lateS + d.ontS;
       return "<tr><th scope=\"row\">" + m + "</th>" +
-        '<td class="num">' + num(d.lateL) + '</td><td class="num">' + num(d.lateS) + "</td>" +
-        '<td class="num">' + num(d.ontL) + '</td><td class="num">' + num(d.ontS) + "</td>" +
-        '<td class="num">' + f.toLocaleString("id-ID") + '</td><td class="num">' + gg.toLocaleString("id-ID") + "</td>" +
-        '<td class="stat">' + (f ? stat(gg / f) : "—") + '</td><td class="stat">' + (f ? stat(d.ontS / f) : "—") + "</td></tr>";
+        '<td class="num" data-label="Late · PO">' + num(d.lateL) + "</td>" +
+        '<td class="num" data-label="Late · Datang">' + num(d.lateS) + "</td>" +
+        '<td class="num" data-label="On Time · PO">' + num(d.ontL) + "</td>" +
+        '<td class="num" data-label="On Time · Datang">' + num(d.ontS) + "</td>" +
+        '<td class="num" data-label="Total PO">' + f.toLocaleString("id-ID") + "</td>" +
+        '<td class="num" data-label="Total Datang">' + gg.toLocaleString("id-ID") + "</td>" +
+        '<td class="stat" data-label="FULFIL">' + (f ? stat(gg / f) : "—") + "</td>" +
+        '<td class="stat" data-label="OTIF">' + (f ? stat(d.ontS / f) : "—") + "</td></tr>";
     }).join("");
     body += '<tr class="total"><th scope="row">Grand Total</th>' +
-      '<td class="num">' + num(g.lateL) + '</td><td class="num">' + num(g.lateS) + "</td>" +
-      '<td class="num">' + num(g.ontL) + '</td><td class="num">' + num(g.ontS) + "</td>" +
-      '<td class="num">' + F.toLocaleString("id-ID") + '</td><td class="num">' + G.toLocaleString("id-ID") + "</td>" +
-      '<td class="stat">' + (F ? stat(G / F) : "—") + '</td><td class="stat">' + (F ? stat(g.ontS / F) : "—") + "</td></tr>";
+      '<td class="num" data-label="Late · PO">' + num(g.lateL) + "</td>" +
+      '<td class="num" data-label="Late · Datang">' + num(g.lateS) + "</td>" +
+      '<td class="num" data-label="On Time · PO">' + num(g.ontL) + "</td>" +
+      '<td class="num" data-label="On Time · Datang">' + num(g.ontS) + "</td>" +
+      '<td class="num" data-label="Total PO">' + F.toLocaleString("id-ID") + "</td>" +
+      '<td class="num" data-label="Total Datang">' + G.toLocaleString("id-ID") + "</td>" +
+      '<td class="stat" data-label="FULFIL">' + (F ? stat(G / F) : "—") + "</td>" +
+      '<td class="stat" data-label="OTIF">' + (F ? stat(g.ontS / F) : "—") + "</td></tr>";
 
     var el = document.createElement("article");
     el.className = "sheet";

@@ -261,7 +261,7 @@ function ResultSheet({ r, index }) {
         </button>
       </header>
 
-      <div className="max-w-full overflow-x-auto">
+      <div className="hidden max-w-full overflow-x-auto lg:block">
         <table className="w-full min-w-[760px] border-collapse text-[13px]">
           <thead>
             <tr className="border-b border-rule-2">
@@ -308,9 +308,41 @@ function ResultSheet({ r, index }) {
           </tbody>
         </table>
       </div>
-      <p className="mt-2 px-6 font-mono text-[11px] text-muted lg:hidden">
-        Geser tabel ke kanan untuk melihat FULFIL dan OTIF.
-      </p>
+      <div className="divide-y divide-rule lg:hidden">
+        {months.map((m) => {
+          const d = agg[m];
+          const f = d.lateL + d.ontL;
+          const gg = d.lateS + d.ontS;
+          return (
+            <div key={m} className="px-6 py-3">
+              <h4 className="font-display text-2xl font-medium">{m}</h4>
+              <dl className="mt-2 space-y-1">
+                <MobileRow label="Late · PO" value={fmt(d.lateL)} />
+                <MobileRow label="Late · Datang" value={fmt(d.lateS)} />
+                <MobileRow label="On Time · PO" value={fmt(d.ontL)} />
+                <MobileRow label="On Time · Datang" value={fmt(d.ontS)} />
+                <MobileRow label="Total PO" value={f.toLocaleString("id-ID")} />
+                <MobileRow label="Total Datang" value={gg.toLocaleString("id-ID")} />
+                <MobileRow label="FULFIL" stat={f ? gg / f : null} />
+                <MobileRow label="OTIF" stat={f ? d.ontS / f : null} />
+              </dl>
+            </div>
+          );
+        })}
+        <div className="border-t-2 border-ink bg-paper-2/40 px-6 py-3">
+          <h4 className="font-display text-2xl font-medium">Grand Total</h4>
+          <dl className="mt-2 space-y-1">
+            <MobileRow label="Late · PO" value={fmt(g.lateL)} />
+            <MobileRow label="Late · Datang" value={fmt(g.lateS)} />
+            <MobileRow label="On Time · PO" value={fmt(g.ontL)} />
+            <MobileRow label="On Time · Datang" value={fmt(g.ontS)} />
+            <MobileRow label="Total PO" value={F.toLocaleString("id-ID")} />
+            <MobileRow label="Total Datang" value={G.toLocaleString("id-ID")} />
+            <MobileRow label="FULFIL" stat={F ? G / F : null} />
+            <MobileRow label="OTIF" stat={F ? g.ontS / F : null} />
+          </dl>
+        </div>
+      </div>
     </article>
   );
 }
@@ -322,6 +354,17 @@ function Stat({ value, strong = false }) {
       <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: c }} />
       {pct(value)}
     </span>
+  );
+}
+
+function MobileRow({ label, value, stat }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4">
+      <dt className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-muted">{label}</dt>
+      <dd className="tnum font-mono text-[13px] text-ink-2">
+        {stat != null ? <Stat value={stat} /> : value}
+      </dd>
+    </div>
   );
 }
 
