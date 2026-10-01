@@ -241,7 +241,7 @@ function ResultSheet({ r, index }) {
 
   return (
     <article
-      className="animate-rise border border-rule bg-sheet"
+      className="animate-rise min-w-0 border border-rule bg-sheet"
       style={{ animationDelay: `${index * 60}ms` }}
     >
       <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 border-b border-rule px-6 py-4">
@@ -261,7 +261,7 @@ function ResultSheet({ r, index }) {
         </button>
       </header>
 
-      <div className="overflow-x-auto">
+      <div className="max-w-full overflow-x-auto">
         <table className="w-full min-w-[760px] border-collapse text-[13px]">
           <thead>
             <tr className="border-b border-rule-2">
@@ -308,6 +308,9 @@ function ResultSheet({ r, index }) {
           </tbody>
         </table>
       </div>
+      <p className="mt-2 px-6 font-mono text-[11px] text-muted lg:hidden">
+        Geser tabel ke kanan untuk melihat FULFIL dan OTIF.
+      </p>
     </article>
   );
 }
